@@ -32,36 +32,37 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 
-data class AppDestination(
+data class DrawerConfig(
+    val mainAppIcon: (@Composable () -> Painter)? = null,
+    val drawerItems: List<DrawerItemConfig> = emptyList(),
+)
+
+data class DrawerItemConfig(
     val drawerOption: EzRoute,
     val title: String,
     val icon: ImageVector,
 )
 
-data class DrawerConfig(
-    val defaultRoute: EzRoute,
-    val mainAppIcon: (@Composable () -> Painter)? = null,
-)
-
 @Composable
 fun EzDrawer(
+    initialRoute: EzRoute,
     drawerConfig: DrawerConfig,
     navHostConfig: NavHostConfig,
-    destinations: List<AppDestination>,
     navController: NavHostController = rememberNavController(),
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 ) {
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            AppDrawerContent(
+            DrawerContent(
                 drawerState = drawerState,
-                menuItems = destinations,
-                defaultPick = drawerConfig.defaultRoute,
+                menuItems = drawerConfig.drawerItems,
+                initialRoute = initialRoute,
                 config = drawerConfig,
             ) { onUserPickedOption ->
                 navController.navigate(onUserPickedOption.name)
@@ -77,14 +78,14 @@ fun EzDrawer(
 }
 
 @Composable
-fun AppDrawerContent(
+fun DrawerContent(
     drawerState: DrawerState,
-    menuItems: List<AppDestination>,
-    defaultPick: EzRoute,
+    menuItems: List<DrawerItemConfig>,
+    initialRoute: EzRoute,
     config: DrawerConfig,
     onClick: (EzRoute) -> Unit
 ) {
-    var currentPick by remember { mutableStateOf(defaultPick) }
+    var currentPick by remember { mutableStateOf(initialRoute) }
     val coroutineScope = rememberCoroutineScope()
     val mainAppIcon = config.mainAppIcon
 
@@ -108,11 +109,11 @@ fun AppDrawerContent(
                     // generates on demand the required composables
                     items(menuItems) { item ->
                         // custom UI representation of the button
-                        AppDrawerItem(item = item) { navOption ->
+                        DrawerItem(item = item) { navOption ->
 
                             // if it is the same - ignore the click
                             if (currentPick == navOption) {
-                                return@AppDrawerItem
+                                return@DrawerItem
                             }
 
                             currentPick = navOption
@@ -133,7 +134,7 @@ fun AppDrawerContent(
 }
 
 @Composable
-fun AppDrawerItem(item: AppDestination, onClick: (EzRoute) -> Unit) {
+fun DrawerItem(item: DrawerItemConfig, onClick: (EzRoute) -> Unit) {
     Surface(
         color = MaterialTheme.colorScheme.onPrimary,
         modifier = Modifier.width(150.dp),
