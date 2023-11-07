@@ -37,7 +37,7 @@ import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 
 @Composable
-fun AppDrawer(
+fun EzDrawer(
     drawerConfig: DrawerConfig,
     navHostConfig: NavHostConfig,
     destinations: List<AppDestination>,
@@ -57,7 +57,7 @@ fun AppDrawer(
             }
         }
     ) {
-        AppNavHost(
+        EzNavHost(
             navController = navController,
             navHostConfig = navHostConfig,
         )
