@@ -18,15 +18,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
+import com.bollwerks.eznav.model.FabConfig
 import kotlinx.coroutines.launch
-
-data class FabParams(
-    val icon: ImageVector,
-    val contentDescription: String,
-    val onClick: () -> Unit
-)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,7 +28,7 @@ fun EzScaffold(
     title: String,
     modifier: Modifier = Modifier,
     drawerState: DrawerState? = null,
-    fabParams: FabParams? = null,
+    fabConfig: FabConfig? = null,
     titleContent: @Composable (() -> Unit)? = null,
     menuItems: List<MoreMenuItem>? = null,
     content: @Composable ColumnScope.() -> Unit
@@ -69,7 +63,7 @@ fun EzScaffold(
             )
         },
         floatingActionButton = {
-            fabParams?.let {
+            fabConfig?.let {
                 FloatingActionButton(onClick = it.onClick) {
                     Icon(it.icon, contentDescription = it.contentDescription)
                 }

@@ -3,16 +3,16 @@ package com.bollwerks.eznav
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavController
-import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import com.bollwerks.eznav.model.RouteParam
 import java.time.LocalDate
 
 open class EzRoute(
     val name: String,
-    vararg params: EzRouteParam<*>,
+    vararg params: RouteParam<*>,
 ) {
     val route: String
-    val params: List<EzRouteParam<*>> = params.toList()
+    val params: List<RouteParam<*>> = params.toList()
     val navArguments: List<NamedNavArgument>
 
     init {
@@ -74,7 +74,7 @@ open class EzRoute(
         return sb.toString()
     }
 
-    private fun buildRouteTemplate(name: String, args: Array<out EzRouteParam<*>>): String {
+    private fun buildRouteTemplate(name: String, args: Array<out RouteParam<*>>): String {
         var route = name
         val optionalArgs = args.filter { it.isOptional }.map { it.name }
         val requiredArgs = args.filter { !it.isOptional }.map { it.name }
@@ -95,7 +95,7 @@ open class EzRoute(
         return route
     }
 
-    private fun buildNavArguments(args: Array<out EzRouteParam<*>>): List<NamedNavArgument> {
+    private fun buildNavArguments(args: Array<out RouteParam<*>>): List<NamedNavArgument> {
         return args.map { arg ->
             if (arg.isOptional) {
                 navArgument(arg.name) {
@@ -111,32 +111,3 @@ open class EzRoute(
         }
     }
 }
-
-open class EzRouteParam<T>(
-    val name: String,
-    val type: NavType<T>,
-    val defaultValue: T? = null,
-    val isOptional: Boolean = false,
-)
-
-class EzEnumParam<T : Enum<T>>(
-    name: String,
-    defaultValue: T? = null,
-    isOptional: Boolean = false,
-) : EzRouteParam<String?>(
-    name = name,
-    type = NavType.StringType,
-    defaultValue = defaultValue?.toString(),
-    isOptional = isOptional,
-)
-
-class EzDateParam(
-    name: String,
-    defaultValue: LocalDate? = null,
-    isOptional: Boolean = false,
-) : EzRouteParam<String?>(
-    name = name,
-    type = NavType.StringType,
-    defaultValue = defaultValue?.toString(),
-    isOptional = isOptional,
-)

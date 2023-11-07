@@ -6,6 +6,7 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.bollwerks.eznav.model.EzConfig
 
 @Composable
 fun EzNav(

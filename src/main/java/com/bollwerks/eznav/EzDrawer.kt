@@ -32,21 +32,12 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.bollwerks.eznav.model.DrawerConfig
+import com.bollwerks.eznav.model.DrawerItemConfig
+import com.bollwerks.eznav.model.NavHostConfig
 import kotlinx.coroutines.launch
-
-data class DrawerConfig(
-    val mainAppIcon: (@Composable () -> Painter)? = null,
-    val drawerItems: List<DrawerItemConfig> = emptyList(),
-)
-
-data class DrawerItemConfig(
-    val drawerOption: EzRoute,
-    val title: String,
-    val icon: ImageVector,
-)
 
 @Composable
 fun EzDrawer(
