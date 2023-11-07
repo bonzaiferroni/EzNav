@@ -6,9 +6,22 @@ import java.time.LocalDate
 open class RouteParam<T>(
     val name: String,
     val type: NavType<T>,
-    val defaultValue: T? = null,
-    val isOptional: Boolean = false,
-)
+) {
+    var isOptional: Boolean = false
+        private set
+    var defaultValue: T? = null
+        private set
+
+    constructor(
+        name: String,
+        type: NavType<T>,
+        isOptional: Boolean,
+        defaultValue: T? = null,
+    ) : this(name, type) {
+        this.isOptional = isOptional
+        this.defaultValue = defaultValue
+    }
+}
 
 class EnumParam<T : Enum<T>>(
     name: String,

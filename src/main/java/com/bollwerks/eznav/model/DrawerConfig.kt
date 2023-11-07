@@ -10,7 +10,7 @@ data class DrawerConfig(
 )
 
 data class DrawerLinkConfig(
-    val drawerOption: EzRoute,
+    val route: EzRoute,
     val title: String,
     val emoji: String,
 )

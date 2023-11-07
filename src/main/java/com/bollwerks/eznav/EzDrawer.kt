@@ -126,7 +126,7 @@ fun DrawerItem(item: DrawerLinkConfig, onClick: (EzRoute) -> Unit) {
     Surface(
         color = MaterialTheme.colorScheme.onPrimary,
         modifier = Modifier.width(150.dp),
-        onClick = { onClick(item.drawerOption) },
+        onClick = { onClick(item.route) },
         shape = RoundedCornerShape(50),
     ) {
         Row(
