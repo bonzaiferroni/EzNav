@@ -1,7 +1,9 @@
 package com.bollwerks.eznav
 
+import androidx.compose.material3.DrawerState
 import androidx.compose.runtime.Composable
 import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -10,6 +12,7 @@ import androidx.navigation.compose.composable
 fun EzNavHost(
     navHostConfig: NavHostConfig,
     navController: NavHostController,
+    drawerState: DrawerState,
 ) {
     NavHost(
         navController = navController,
@@ -20,7 +23,7 @@ fun EzNavHost(
                 route = config.route,
                 arguments = config.arguments,
             ) {
-                config.content()
+                config.content(navController, drawerState)
             }
         }
     }
@@ -34,5 +37,5 @@ data class NavHostConfig(
 data class NavComposableConfig(
     val route: String,
     val arguments: List<NamedNavArgument> = emptyList(),
-    val content: @Composable () -> Unit,
+    val content: @Composable (NavController, DrawerState) -> Unit,
 )

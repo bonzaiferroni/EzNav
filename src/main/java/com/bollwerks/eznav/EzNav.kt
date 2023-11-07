@@ -9,14 +9,14 @@ import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun EzNav(
+    config: EzConfig,
     navHostConfig: NavHostConfig,
-    drawerConfig: DrawerConfig,
     destinations: List<AppDestination>,
-    navController: NavHostController = rememberNavController(),
 ) {
     val drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val navController: NavHostController = rememberNavController()
     EzDrawer(
-        drawerConfig = drawerConfig,
+        drawerConfig = config.drawerConfig,
         navHostConfig = navHostConfig,
         destinations = destinations,
         navController = navController,

@@ -1,4 +1,5 @@
 package com.bollwerks.eznav
 
-class EzConfig {
-}
+class EzConfig(
+    val drawerConfig: DrawerConfig,
+)

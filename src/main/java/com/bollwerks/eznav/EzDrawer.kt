@@ -36,6 +36,17 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 
+data class AppDestination(
+    val drawerOption: EzRoute,
+    val title: String,
+    val icon: ImageVector,
+)
+
+data class DrawerConfig(
+    val defaultRoute: EzRoute,
+    val mainAppIcon: (@Composable () -> Painter)? = null,
+)
+
 @Composable
 fun EzDrawer(
     drawerConfig: DrawerConfig,
@@ -50,7 +61,7 @@ fun EzDrawer(
             AppDrawerContent(
                 drawerState = drawerState,
                 menuItems = destinations,
-                defaultPick = drawerConfig.defaultPick,
+                defaultPick = drawerConfig.defaultRoute,
                 config = drawerConfig,
             ) { onUserPickedOption ->
                 navController.navigate(onUserPickedOption.name)
@@ -60,6 +71,7 @@ fun EzDrawer(
         EzNavHost(
             navController = navController,
             navHostConfig = navHostConfig,
+            drawerState = drawerState,
         )
     }
 }
@@ -74,17 +86,20 @@ fun AppDrawerContent(
 ) {
     var currentPick by remember { mutableStateOf(defaultPick) }
     val coroutineScope = rememberCoroutineScope()
+    val mainAppIcon = config.mainAppIcon
 
     ModalDrawerSheet {
         Surface(color = MaterialTheme.colorScheme.background) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Image(
-                    painter = config.mainAppIcon,
-                    contentDescription = "Main app icon",
-                    modifier = Modifier.size(150.dp)
-                )
+                if (mainAppIcon != null) {
+                    Image(
+                        painter = mainAppIcon(),
+                        contentDescription = "Main app icon",
+                        modifier = Modifier.size(150.dp)
+                    )
+                }
                 LazyColumn(
                     modifier = Modifier.padding(horizontal = 8.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -144,16 +159,3 @@ fun AppDrawerItem(item: AppDestination, onClick: (EzRoute) -> Unit) {
         }
     }
 }
-
-// base data container for the button creation
-// takes in the resources IDs
-data class AppDestination(
-    val drawerOption: EzRoute,
-    val title: String,
-    val icon: ImageVector,
-)
-
-data class DrawerConfig(
-    val defaultPick: EzRoute,
-    val mainAppIcon: Painter,
-)
