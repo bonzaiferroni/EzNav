@@ -28,20 +28,17 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.bollwerks.eznav.model.DrawerConfig
-import com.bollwerks.eznav.model.DrawerItemConfig
+import com.bollwerks.eznav.model.DrawerLinkConfig
 import com.bollwerks.eznav.model.NavHostConfig
 import kotlinx.coroutines.launch
 
 @Composable
 fun EzDrawer(
-    initialRoute: EzRoute,
     drawerConfig: DrawerConfig,
     navHostConfig: NavHostConfig,
     navController: NavHostController = rememberNavController(),
@@ -53,7 +50,7 @@ fun EzDrawer(
             DrawerContent(
                 drawerState = drawerState,
                 menuItems = drawerConfig.drawerItems,
-                initialRoute = initialRoute,
+                initialRoute = navHostConfig.initialRoute,
                 config = drawerConfig,
             ) { onUserPickedOption ->
                 navController.navigate(onUserPickedOption.name)
@@ -71,7 +68,7 @@ fun EzDrawer(
 @Composable
 fun DrawerContent(
     drawerState: DrawerState,
-    menuItems: List<DrawerItemConfig>,
+    menuItems: List<DrawerLinkConfig>,
     initialRoute: EzRoute,
     config: DrawerConfig,
     onClick: (EzRoute) -> Unit
@@ -125,7 +122,7 @@ fun DrawerContent(
 }
 
 @Composable
-fun DrawerItem(item: DrawerItemConfig, onClick: (EzRoute) -> Unit) {
+fun DrawerItem(item: DrawerLinkConfig, onClick: (EzRoute) -> Unit) {
     Surface(
         color = MaterialTheme.colorScheme.onPrimary,
         modifier = Modifier.width(150.dp),

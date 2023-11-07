@@ -22,9 +22,9 @@ fun EzNavHost(
         navController = navController,
         startDestination = navHostConfig.initialRoute.route,
     ) {
-        navHostConfig.screenConfigs.forEach { config ->
+        navHostConfig.screens.forEach { config ->
             composable(
-                route = config.route,
+                route = config.route.route,
                 arguments = config.arguments,
             ) {
                 config.content(navController, drawerState, vmFactory)

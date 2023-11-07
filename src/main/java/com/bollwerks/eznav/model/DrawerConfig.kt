@@ -7,11 +7,18 @@ import com.bollwerks.eznav.EzRoute
 
 data class DrawerConfig(
     val mainAppIcon: (@Composable () -> Painter)? = null,
-    val drawerItems: List<DrawerItemConfig> = emptyList(),
+    val drawerItems: List<DrawerLinkConfig> = emptyList(),
 )
 
-data class DrawerItemConfig(
+data class DrawerLinkConfig(
     val drawerOption: EzRoute,
     val title: String,
     val icon: ImageVector,
 )
+
+fun EzConfig.toDrawerConfig(): DrawerConfig {
+    return DrawerConfig(
+        mainAppIcon = this.mainAppIcon,
+        drawerItems = this.screens.mapNotNull { it.drawerLink }
+    )
+}
