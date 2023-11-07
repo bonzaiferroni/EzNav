@@ -2,7 +2,6 @@ package com.bollwerks.eznav.model
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.vector.ImageVector
 import com.bollwerks.eznav.EzRoute
 
 data class DrawerConfig(
@@ -13,7 +12,7 @@ data class DrawerConfig(
 data class DrawerLinkConfig(
     val drawerOption: EzRoute,
     val title: String,
-    val icon: ImageVector,
+    val emoji: String,
 )
 
 fun EzConfig.toDrawerConfig(): DrawerConfig {
