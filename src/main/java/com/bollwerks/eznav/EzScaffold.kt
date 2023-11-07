@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import com.bollwerks.eznav.model.FabConfig
 import kotlinx.coroutines.launch
 
@@ -27,10 +28,11 @@ import kotlinx.coroutines.launch
 fun EzScaffold(
     title: String,
     modifier: Modifier = Modifier,
+    navController: NavController? = null,
     drawerState: DrawerState? = null,
     fabConfig: FabConfig? = null,
     titleContent: @Composable (() -> Unit)? = null,
-    menuItems: List<MoreMenuItem>? = null,
+    menuItems: List<ScreenMenuItem>? = null,
     content: @Composable ColumnScope.() -> Unit
 ) {
     Scaffold(
@@ -57,7 +59,7 @@ fun EzScaffold(
                 },
                 actions = {
                     if (menuItems != null) {
-                        EzMenu(items = menuItems)
+                        ScreenMenu(items = menuItems, navController = navController)
                     }
                 },
             )
@@ -86,9 +88,9 @@ fun AppScaffoldPreview() {
     EzScaffold(
         title = "Title",
         menuItems = listOf(
-            MoreMenuItem("Item 1") {},
-            MoreMenuItem("Item 2") {},
-            MoreMenuItem("Item 3") {},
+            ScreenMenuItem("Item 1") {},
+            ScreenMenuItem("Item 2") {},
+            ScreenMenuItem("Item 3") {},
         )
     ) {
         Text("Content")

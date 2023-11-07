@@ -15,10 +15,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 
 @Composable
-fun EzMenu(
-    items: List<MoreMenuItem>,
+fun ScreenMenu(
+    navController: NavController?,
+    items: List<ScreenMenuItem>,
     modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -41,7 +43,7 @@ fun EzMenu(
                 DropdownMenuItem(
                     onClick = {
                         expanded = false
-                        item.onClick()
+                        item.onClick(navController)
                     },
                     text = { Text(item.name) }
                 )
@@ -50,7 +52,7 @@ fun EzMenu(
     }
 }
 
-data class MoreMenuItem(
+data class ScreenMenuItem(
     val name: String,
-    val onClick: () -> Unit
+    val onClick: (NavController?) -> Unit
 )

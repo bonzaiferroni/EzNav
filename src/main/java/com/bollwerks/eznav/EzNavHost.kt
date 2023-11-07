@@ -27,7 +27,19 @@ fun EzNavHost(
                 route = config.route.route,
                 arguments = config.arguments,
             ) {
-                config.content(navController, drawerState, vmFactory)
+                val scaffold = config.scaffold
+                if (scaffold != null) {
+                    EzScaffold(
+                        drawerState = drawerState,
+                        title = scaffold.title,
+                        navController = navController,
+                        titleContent = scaffold.titleContent,
+                    ) {
+                        config.content(navController, drawerState, vmFactory)
+                    }
+                } else {
+                    config.content(navController, drawerState, vmFactory)
+                }
             }
         }
     }

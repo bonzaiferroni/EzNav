@@ -13,4 +13,5 @@ data class ScreenConfig(
     val content: @Composable (NavController, DrawerState, ViewModelProvider.Factory) -> Unit,
     val drawerLink: DrawerLinkConfig? = null,
     val isDefaultRoute: Boolean = false,
+    val scaffold: ScaffoldConfig? = null,
 )
