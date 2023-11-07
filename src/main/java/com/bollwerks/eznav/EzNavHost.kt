@@ -25,7 +25,7 @@ fun EzNavHost(
         navHostConfig.screens.forEach { config ->
             composable(
                 route = config.route.route,
-                arguments = config.arguments,
+                arguments = config.route.navArguments,
             ) {
                 val scaffold = config.scaffold
                 if (scaffold != null) {

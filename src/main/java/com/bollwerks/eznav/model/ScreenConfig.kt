@@ -9,7 +9,6 @@ import com.bollwerks.eznav.EzRoute
 
 data class ScreenConfig(
     val route: EzRoute,
-    val arguments: List<NamedNavArgument> = emptyList(),
     val content: @Composable (NavController, DrawerState, ViewModelProvider.Factory) -> Unit,
     val drawerLink: DrawerLinkConfig? = null,
     val isDefaultRoute: Boolean = false,

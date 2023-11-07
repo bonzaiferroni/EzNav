@@ -107,7 +107,6 @@ open class EzRoute(
                     type = arg.type
                 }
             }
-
         }
     }
 }
