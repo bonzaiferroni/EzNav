@@ -17,6 +17,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 
+data class ScreenMenuItem(
+    val name: String,
+    val onClick: (NavController?) -> Unit
+)
+
 @Composable
 fun ScreenMenu(
     navController: NavController?,
@@ -51,8 +56,3 @@ fun ScreenMenu(
         }
     }
 }
-
-data class ScreenMenuItem(
-    val name: String,
-    val onClick: (NavController?) -> Unit
-)
